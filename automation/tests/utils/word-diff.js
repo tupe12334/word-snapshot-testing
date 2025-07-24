@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 const { XMLParser } = require("fast-xml-parser");
 const AdmZip = require("adm-zip");
 
@@ -28,47 +27,17 @@ function parseAndStripDates(xmlStr) {
 }
 
 /**
- * Compares a Word document with a snapshot file
- * @param {string} documentPath - Path to the Word document to compare
- * @param {string} snapshotPath - Path to the snapshot file
- * @returns {Object} Result object with success status and content
+ * Extracts and processes Word document content for snapshot comparison
+ * @param {string} documentPath - Path to the Word document
+ * @returns {string} Processed content ready for snapshot comparison
  */
-function compareWithSnapshot(documentPath, snapshotPath) {
+function extractWordContentForSnapshot(documentPath) {
   // Extract and parse the Word document XML content
   const xmlContent = getDocXml(documentPath);
   const parsedContent = parseAndStripDates(xmlContent);
-  const contentSnapshot = JSON.stringify(parsedContent, null, 2);
-
-  // Ensure snapshots directory exists
-  const snapshotDir = path.dirname(snapshotPath);
-  if (!fs.existsSync(snapshotDir)) {
-    fs.mkdirSync(snapshotDir, { recursive: true });
-  }
-
-  if (!fs.existsSync(snapshotPath)) {
-    // First run - create the snapshot
-    fs.writeFileSync(snapshotPath, contentSnapshot);
-    return {
-      success: true,
-      isNewSnapshot: true,
-      message: `Created initial snapshot at: ${snapshotPath}`,
-      content: contentSnapshot,
-    };
-  } else {
-    // Compare with existing snapshot
-    const existingSnapshot = fs.readFileSync(snapshotPath, "utf8");
-    const matches = contentSnapshot === existingSnapshot;
-
-    return {
-      success: matches,
-      isNewSnapshot: false,
-      message: matches
-        ? "Word document content matches snapshot!"
-        : "Word document content does not match snapshot",
-      content: contentSnapshot,
-      expectedContent: existingSnapshot,
-    };
-  }
+  
+  // Return formatted JSON string for consistent snapshot comparison
+  return JSON.stringify(parsedContent, null, 2);
 }
 
-export { getDocXml, parseAndStripDates, compareWithSnapshot };
+export { getDocXml, parseAndStripDates, extractWordContentForSnapshot };

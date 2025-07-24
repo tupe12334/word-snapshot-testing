@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
-import { compareWithSnapshot } from "./utils/word-diff.js";
+import { extractWordContentForSnapshot } from "./utils/word-diff.js";
 
 test.describe("Word Document Download", () => {
   test("should download word document and match content snapshot", async ({
@@ -9,14 +9,10 @@ test.describe("Word Document Download", () => {
   }) => {
     // Set up download handling
     const downloadsPath = path.join(__dirname, "..", "downloads");
-    const snapshotsPath = path.join(__dirname, "snapshots"); // Move snapshots to tests/snapshots
 
     // Ensure directories exist
     if (!fs.existsSync(downloadsPath)) {
       fs.mkdirSync(downloadsPath, { recursive: true });
-    }
-    if (!fs.existsSync(snapshotsPath)) {
-      fs.mkdirSync(snapshotsPath, { recursive: true });
     }
 
     // Navigate to the HTML page
@@ -55,13 +51,9 @@ test.describe("Word Document Download", () => {
     const stats = fs.statSync(downloadPath);
     expect(stats.size).toBeGreaterThan(0);
 
-    // Compare Word document content with snapshot
-    const snapshotPath = path.join(snapshotsPath, "word-document-content.json");
-    const comparisonResult = compareWithSnapshot(downloadPath, snapshotPath);
-
-    // Assert the comparison result
-    expect(comparisonResult.success).toBe(true);
-    console.log(comparisonResult.message);
+    // Extract Word document content and compare with snapshot using Playwright's toMatchSnapshot
+    const wordContent = extractWordContentForSnapshot(downloadPath);
+    expect(wordContent).toMatchSnapshot("word-document-content.json");
 
     // Verify button text returns to normal
     await expect(page.locator("#downloadBtn")).toHaveText(
