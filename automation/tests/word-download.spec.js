@@ -1,22 +1,7 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
-const { XMLParser } = require("fast-xml-parser");
-const AdmZip = require("adm-zip");
-
-function getDocXml(filePath) {
-  const zip = new AdmZip(filePath);
-  const entry = zip.getEntry("word/document.xml");
-  return entry.getData().toString("utf8");
-}
-
-function parseAndStripDates(xmlStr) {
-  const parser = new XMLParser({ ignoreAttributes: false });
-  const json = parser.parse(xmlStr);
-
-  const jsonStr = JSON.stringify(json).replace(/\d{4}-\d{2}-\d{2}/g, ""); // remove ISO dates
-  return JSON.parse(jsonStr);
-}
+import { compareWithSnapshot } from "./utils/word-diff.js";
 
 test.describe("Word Document Download", () => {
   test("should download word document and match content snapshot", async ({
@@ -70,24 +55,13 @@ test.describe("Word Document Download", () => {
     const stats = fs.statSync(downloadPath);
     expect(stats.size).toBeGreaterThan(0);
 
-    // Extract and parse the Word document XML content
-    const xmlContent = getDocXml(downloadPath);
-    const parsedContent = parseAndStripDates(xmlContent);
-    const contentSnapshot = JSON.stringify(parsedContent, null, 2);
-
-    // Snapshot testing logic
+    // Compare Word document content with snapshot
     const snapshotPath = path.join(snapshotsPath, "word-document-content.json");
+    const comparisonResult = compareWithSnapshot(downloadPath, snapshotPath);
 
-    if (!fs.existsSync(snapshotPath)) {
-      // First run - create the snapshot
-      fs.writeFileSync(snapshotPath, contentSnapshot);
-      console.log("Created initial snapshot at:", snapshotPath);
-    } else {
-      // Compare with existing snapshot
-      const existingSnapshot = fs.readFileSync(snapshotPath, "utf8");
-      expect(contentSnapshot).toBe(existingSnapshot);
-      console.log("Word document content matches snapshot!");
-    }
+    // Assert the comparison result
+    expect(comparisonResult.success).toBe(true);
+    console.log(comparisonResult.message);
 
     // Verify button text returns to normal
     await expect(page.locator("#downloadBtn")).toHaveText(
