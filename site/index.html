@@ -78,6 +78,14 @@
           button.disabled = true;
           button.textContent = "Generating...";
 
+          // Get the current date
+          const today = new Date();
+          const dateString = today.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+
           // Create a new document using docx
           const doc = new docx.Document({
             sections: [
@@ -87,7 +95,7 @@
                   new docx.Paragraph({
                     children: [
                       new docx.TextRun(
-                        "This is an empty Word document generated using docx package."
+                        `This is an empty Word document generated on ${dateString}.`
                       ),
                     ],
                   }),
