@@ -1,25 +1,27 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
-const { XMLParser } = require('fast-xml-parser');
-const AdmZip = require('adm-zip');
+const { XMLParser } = require("fast-xml-parser");
+const AdmZip = require("adm-zip");
 
 function getDocXml(filePath) {
   const zip = new AdmZip(filePath);
-  const entry = zip.getEntry('word/document.xml');
-  return entry.getData().toString('utf8');
+  const entry = zip.getEntry("word/document.xml");
+  return entry.getData().toString("utf8");
 }
 
 function parseAndStripDates(xmlStr) {
   const parser = new XMLParser({ ignoreAttributes: false });
   const json = parser.parse(xmlStr);
 
-  const jsonStr = JSON.stringify(json).replace(/\d{4}-\d{2}-\d{2}/g, ''); // remove ISO dates
+  const jsonStr = JSON.stringify(json).replace(/\d{4}-\d{2}-\d{2}/g, ""); // remove ISO dates
   return JSON.parse(jsonStr);
 }
 
 test.describe("Word Document Download", () => {
-  test("should download word document and match content snapshot", async ({ page }) => {
+  test("should download word document and match content snapshot", async ({
+    page,
+  }) => {
     // Set up download handling
     const downloadsPath = path.join(__dirname, "..", "downloads");
     const snapshotsPath = path.join(__dirname, "snapshots"); // Move snapshots to tests/snapshots
@@ -75,14 +77,14 @@ test.describe("Word Document Download", () => {
 
     // Snapshot testing logic
     const snapshotPath = path.join(snapshotsPath, "word-document-content.json");
-    
+
     if (!fs.existsSync(snapshotPath)) {
       // First run - create the snapshot
       fs.writeFileSync(snapshotPath, contentSnapshot);
       console.log("Created initial snapshot at:", snapshotPath);
     } else {
       // Compare with existing snapshot
-      const existingSnapshot = fs.readFileSync(snapshotPath, 'utf8');
+      const existingSnapshot = fs.readFileSync(snapshotPath, "utf8");
       expect(contentSnapshot).toBe(existingSnapshot);
       console.log("Word document content matches snapshot!");
     }
