@@ -21,7 +21,8 @@ export default defineConfig({
     baseURL: "file://" + process.cwd() + "/../site/",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "on",
+    screenshot: "on",
   },
 
   /* Configure projects for major browsers */
