@@ -7,6 +7,13 @@ settings:
 importers:
 
   .:
+    dependencies:
+      adm-zip:
+        specifier: ^0.5.16
+        version: 0.5.16
+      fast-xml-parser:
+        specifier: ^5.2.5
+        version: 5.2.5
     devDependencies:
       '@playwright/test':
         specifier: ^1.40.0
@@ -17,6 +24,14 @@ packages:
   '@playwright/test@1.54.1':
     resolution: {integrity: sha512-FS8hQ12acieG2dYSksmLOF7BNxnVf2afRJdCuM1eMSxj6QTSE6G4InGF7oApGgDb65MX7AwMVlIkpru0yZA4Xw==}
     engines: {node: '>=18'}
+    hasBin: true
+
+  adm-zip@0.5.16:
+    resolution: {integrity: sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ==}
+    engines: {node: '>=12.0'}
+
+  fast-xml-parser@5.2.5:
+    resolution: {integrity: sha512-pfX9uG9Ki0yekDHx2SiuRIyFdyAr1kMIMitPvb0YBo8SUfKvia7w7FIyd/l6av85pFYRhZscS75MwMnbvY+hcQ==}
     hasBin: true
 
   fsevents@2.3.2:
@@ -34,11 +49,20 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  strnum@2.1.1:
+    resolution: {integrity: sha512-7ZvoFTiCnGxBtDqJ//Cu6fWtZtc7Y3x+QOirG15wztbdngGSkht27o2pyGWrVy0b4WAy3jbKmnoK6g5VlVNUUw==}
+
 snapshots:
 
   '@playwright/test@1.54.1':
     dependencies:
       playwright: 1.54.1
+
+  adm-zip@0.5.16: {}
+
+  fast-xml-parser@5.2.5:
+    dependencies:
+      strnum: 2.1.1
 
   fsevents@2.3.2:
     optional: true
@@ -50,3 +74,5 @@ snapshots:
       playwright-core: 1.54.1
     optionalDependencies:
       fsevents: 2.3.2
+
+  strnum@2.1.1: {}

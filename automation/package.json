@@ -20,5 +20,8 @@
   "devDependencies": {
     "@playwright/test": "^1.40.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "fast-xml-parser": "^5.2.5"
+  }
 }
