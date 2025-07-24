@@ -22,7 +22,7 @@ test.describe("Word Document Download", () => {
   test("should download word document and match content snapshot", async ({ page }) => {
     // Set up download handling
     const downloadsPath = path.join(__dirname, "..", "downloads");
-    const snapshotsPath = path.join(__dirname, "..", "test-results", "snapshots");
+    const snapshotsPath = path.join(__dirname, "snapshots"); // Move snapshots to tests/snapshots
 
     // Ensure directories exist
     if (!fs.existsSync(downloadsPath)) {

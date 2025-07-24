@@ -1,0 +1,72 @@
+{
+  "?xml": {
+    "@_version": "1.0",
+    "@_encoding": "UTF-8",
+    "@_standalone": "yes"
+  },
+  "w:document": {
+    "w:body": {
+      "w:p": {
+        "w:r": {
+          "w:t": {
+            "#text": "This is an empty Word document generated using docx package.",
+            "@_xml:space": "preserve"
+          }
+        }
+      },
+      "w:sectPr": {
+        "w:pgSz": {
+          "@_w:w": "11906",
+          "@_w:h": "16838",
+          "@_w:orient": "portrait"
+        },
+        "w:pgMar": {
+          "@_w:top": "1440",
+          "@_w:right": "1440",
+          "@_w:bottom": "1440",
+          "@_w:left": "1440",
+          "@_w:header": "708",
+          "@_w:footer": "708",
+          "@_w:gutter": "0"
+        },
+        "w:pgNumType": "",
+        "w:docGrid": {
+          "@_w:linePitch": "360"
+        }
+      }
+    },
+    "@_xmlns:wpc": "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
+    "@_xmlns:mc": "http://schemas.openxmlformats.org/markup-compatibility/2006",
+    "@_xmlns:o": "urn:schemas-microsoft-com:office:office",
+    "@_xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+    "@_xmlns:m": "http://schemas.openxmlformats.org/officeDocument/2006/math",
+    "@_xmlns:v": "urn:schemas-microsoft-com:vml",
+    "@_xmlns:wp14": "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing",
+    "@_xmlns:wp": "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+    "@_xmlns:w10": "urn:schemas-microsoft-com:office:word",
+    "@_xmlns:w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    "@_xmlns:w14": "http://schemas.microsoft.com/office/word/2010/wordml",
+    "@_xmlns:w15": "http://schemas.microsoft.com/office/word/2012/wordml",
+    "@_xmlns:wpg": "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
+    "@_xmlns:wpi": "http://schemas.microsoft.com/office/word/2010/wordprocessingInk",
+    "@_xmlns:wne": "http://schemas.microsoft.com/office/word/2006/wordml",
+    "@_xmlns:wps": "http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
+    "@_xmlns:cx": "http://schemas.microsoft.com/office/drawing/2014/chartex",
+    "@_xmlns:cx1": "http://schemas.microsoft.com/office/drawing/2015/9/8/chartex",
+    "@_xmlns:cx2": "http://schemas.microsoft.com/office/drawing/2015/10/21/chartex",
+    "@_xmlns:cx3": "http://schemas.microsoft.com/office/drawing/2016/5/9/chartex",
+    "@_xmlns:cx4": "http://schemas.microsoft.com/office/drawing/2016/5/10/chartex",
+    "@_xmlns:cx5": "http://schemas.microsoft.com/office/drawing/2016/5/11/chartex",
+    "@_xmlns:cx6": "http://schemas.microsoft.com/office/drawing/2016/5/12/chartex",
+    "@_xmlns:cx7": "http://schemas.microsoft.com/office/drawing/2016/5/13/chartex",
+    "@_xmlns:cx8": "http://schemas.microsoft.com/office/drawing/2016/5/14/chartex",
+    "@_xmlns:aink": "http://schemas.microsoft.com/office/drawing/2016/ink",
+    "@_xmlns:am3d": "http://schemas.microsoft.com/office/drawing/2017/model3d",
+    "@_xmlns:w16cex": "http://schemas.microsoft.com/office/word/2018/wordml/cex",
+    "@_xmlns:w16cid": "http://schemas.microsoft.com/office/word/2016/wordml/cid",
+    "@_xmlns:w16": "http://schemas.microsoft.com/office/word/2018/wordml",
+    "@_xmlns:w16sdtdh": "http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash",
+    "@_xmlns:w16se": "http://schemas.microsoft.com/office/word/2015/wordml/symex",
+    "@_mc:Ignorable": "w14 w15 wp14"
+  }
+}
