@@ -5,6 +5,7 @@ This Playwright project automates the download of Word documents from the HTML p
 ## Setup
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -17,11 +18,13 @@ This Playwright project automates the download of Word documents from the HTML p
 ## Running Tests
 
 - Run all tests:
+
   ```bash
   npm test
   ```
 
 - Run tests with browser visible:
+
   ```bash
   npm run test:headed
   ```
@@ -46,6 +49,7 @@ Downloaded Word documents are saved to the `downloads/` directory within this au
 ## Configuration
 
 The Playwright configuration is set up to:
+
 - Use the local HTML file as the base URL
 - Run tests in parallel
 - Support Chrome, Firefox, and Safari

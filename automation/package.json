@@ -9,7 +9,12 @@
     "test:debug": "playwright test --debug",
     "install-browsers": "playwright install"
   },
-  "keywords": ["playwright", "automation", "word", "download"],
+  "keywords": [
+    "playwright",
+    "automation",
+    "word",
+    "download"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
