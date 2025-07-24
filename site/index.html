@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Document Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        text-align: center;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Word Document Generator</h1>
+      <p>Click the button below to download an empty Word document</p>
+      <button id="downloadBtn" onclick="downloadWordDocument()">
+        Download Empty Word Document
+      </button>
+    </div>
+
+    <!-- Include required libraries -->
+    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+
+    <script>
+      async function downloadWordDocument() {
+        const button = document.getElementById("downloadBtn");
+
+        try {
+          // Disable button during generation
+          button.disabled = true;
+          button.textContent = "Generating...";
+
+          // Create a new document using docx
+          const doc = new docx.Document({
+            sections: [
+              {
+                properties: {},
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun(
+                        "This is an empty Word document generated using docx package."
+                      ),
+                    ],
+                  }),
+                ],
+              },
+            ],
+          });
+
+          // Generate the document
+          const blob = await docx.Packer.toBlob(doc);
+
+          // Save the file
+          saveAs(blob, "empty-document.docx");
+        } catch (error) {
+          console.error("Error generating document:", error);
+          alert("Error generating document: " + error.message);
+        } finally {
+          // Re-enable button
+          button.disabled = false;
+          button.textContent = "Download Empty Word Document";
+        }
+      }
+    </script>
+  </body>
+</html>
