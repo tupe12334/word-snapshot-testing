@@ -4,6 +4,7 @@
   "description": "Playwright automation to download Word documents from HTML page",
   "main": "index.js",
   "scripts": {
+    "build": "tsc --noEmit",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
@@ -19,9 +20,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.40.0"
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@types/adm-zip": "^0.5.0",
     "adm-zip": "^0.5.16",
     "fast-xml-parser": "^5.2.5"
   }

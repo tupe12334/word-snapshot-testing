@@ -1,24 +1,27 @@
-import fs from "fs";
-const { XMLParser } = require("fast-xml-parser");
-const AdmZip = require("adm-zip");
+import { XMLParser } from "fast-xml-parser";
+// @ts-ignore
+import AdmZip from "adm-zip";
 
 /**
  * Extracts the XML content from a Word document (.docx file)
- * @param {string} filePath - Path to the .docx file
- * @returns {string} The XML content of the document
+ * @param filePath - Path to the .docx file
+ * @returns The XML content of the document
  */
-function getDocXml(filePath) {
+function getDocXml(filePath: string): string {
   const zip = new AdmZip(filePath);
   const entry = zip.getEntry("word/document.xml");
+  if (!entry) {
+    throw new Error("Could not find document.xml in the Word document");
+  }
   return entry.getData().toString("utf8");
 }
 
 /**
  * Parses XML string and strips date information for consistent comparison
- * @param {string} xmlStr - The XML string to parse
- * @returns {Object} Parsed JSON object with dates removed
+ * @param xmlStr - The XML string to parse
+ * @returns Parsed JSON object with dates removed
  */
-function parseAndStripDates(xmlStr) {
+function parseAndStripDates(xmlStr: string): any {
   const parser = new XMLParser({ ignoreAttributes: false });
   const json = parser.parse(xmlStr);
 
@@ -37,10 +40,10 @@ function parseAndStripDates(xmlStr) {
 
 /**
  * Extracts and processes Word document content for snapshot comparison
- * @param {string} documentPath - Path to the Word document
- * @returns {string} Processed content ready for snapshot comparison
+ * @param documentPath - Path to the Word document
+ * @returns Processed content ready for snapshot comparison
  */
-function extractWordContentForSnapshot(documentPath) {
+function extractWordContentForSnapshot(documentPath: string): string {
   // Extract and parse the Word document XML content
   const xmlContent = getDocXml(documentPath);
   const parsedContent = parseAndStripDates(xmlContent);

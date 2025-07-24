@@ -1,14 +1,14 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
-import { extractWordContentForSnapshot } from "./utils/word-diff.js";
+import { extractWordContentForSnapshot } from "./utils/word-diff";
 
 test.describe("Word Document Download", () => {
   test("should download word document and match content snapshot", async ({
     page,
   }) => {
     // Set up download handling
-    const downloadsPath = path.join(__dirname, "..", "downloads");
+    const downloadsPath = path.join(process.cwd(), "downloads");
 
     // Ensure directories exist
     if (!fs.existsSync(downloadsPath)) {

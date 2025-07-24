@@ -1,3 +1,8 @@
 playwright-report
 test-results
 downloads
+dist
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
