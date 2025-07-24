@@ -43,9 +43,13 @@
   <body>
     <div class="container">
       <h1>Word Document Generator</h1>
-      <p>Click the button below to download an empty Word document</p>
+      <p>Click the buttons below to download Word documents</p>
       <button id="downloadBtn" onclick="downloadWordDocument()">
         Download Empty Word Document
+      </button>
+      <br /><br />
+      <button id="downloadUuidBtn" onclick="downloadWordDocumentWithUUID()">
+        Download Word Document with Random UUID
       </button>
     </div>
 
@@ -54,6 +58,18 @@
     <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 
     <script>
+      // Function to generate a random UUID
+      function generateUUID() {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+          /[xy]/g,
+          function (c) {
+            var r = (Math.random() * 16) | 0,
+              v = c == "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+          }
+        );
+      }
+
       async function downloadWordDocument() {
         const button = document.getElementById("downloadBtn");
 
@@ -92,6 +108,64 @@
           // Re-enable button
           button.disabled = false;
           button.textContent = "Download Empty Word Document";
+        }
+      }
+
+      async function downloadWordDocumentWithUUID() {
+        const button = document.getElementById("downloadUuidBtn");
+
+        try {
+          // Disable button during generation
+          button.disabled = true;
+          button.textContent = "Generating...";
+
+          // Generate a random UUID
+          const uuid = generateUUID();
+
+          // Create a new document using docx
+          const doc = new docx.Document({
+            sections: [
+              {
+                properties: {},
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun("Word document with random UUID:"),
+                    ],
+                  }),
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: uuid,
+                        bold: true,
+                        size: 24,
+                      }),
+                    ],
+                  }),
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun(
+                        "\n\nThis document was generated using the docx package with a randomly generated UUID."
+                      ),
+                    ],
+                  }),
+                ],
+              },
+            ],
+          });
+
+          // Generate the document
+          const blob = await docx.Packer.toBlob(doc);
+
+          // Save the file with UUID in filename
+          saveAs(blob, `document-${uuid}.docx`);
+        } catch (error) {
+          console.error("Error generating document:", error);
+          alert("Error generating document: " + error.message);
+        } finally {
+          // Re-enable button
+          button.disabled = false;
+          button.textContent = "Download Word Document with Random UUID";
         }
       }
     </script>
