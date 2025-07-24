@@ -22,7 +22,16 @@ function parseAndStripDates(xmlStr) {
   const parser = new XMLParser({ ignoreAttributes: false });
   const json = parser.parse(xmlStr);
 
-  const jsonStr = JSON.stringify(json).replace(/\d{4}-\d{2}-\d{2}/g, ""); // remove ISO dates
+  // Convert to string and remove various date formats
+  let jsonStr = JSON.stringify(json)
+    .replace(/\d{4}-\d{2}-\d{2}/g, "") // remove ISO dates (YYYY-MM-DD)
+    .replace(
+      /\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}\b/g,
+      ""
+    ) // remove "Month DD, YYYY" format
+    .replace(/\b\d{1,2}\/\d{1,2}\/\d{4}\b/g, "") // remove MM/DD/YYYY format
+    .replace(/\b\d{1,2}-\d{1,2}-\d{4}\b/g, ""); // remove MM-DD-YYYY format
+
   return JSON.parse(jsonStr);
 }
 
@@ -35,7 +44,7 @@ function extractWordContentForSnapshot(documentPath) {
   // Extract and parse the Word document XML content
   const xmlContent = getDocXml(documentPath);
   const parsedContent = parseAndStripDates(xmlContent);
-  
+
   // Return formatted JSON string for consistent snapshot comparison
   return JSON.stringify(parsedContent, null, 2);
 }

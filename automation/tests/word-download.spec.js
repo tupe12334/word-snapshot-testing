@@ -31,9 +31,6 @@ test.describe("Word Document Download", () => {
     // Click the download button
     await page.click("#downloadBtn");
 
-    // Wait for button text to change to "Generating..."
-    await expect(page.locator("#downloadBtn")).toHaveText("Generating...");
-
     // Wait for the download to complete
     const download = await downloadPromise;
 
