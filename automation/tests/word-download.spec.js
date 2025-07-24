@@ -76,6 +76,9 @@ test.describe("Word Document Download", () => {
     // Snapshot testing logic
     const snapshotPath = path.join(snapshotsPath, "word-document-content.json");
     
+    console.log("Checking snapshot at:", snapshotPath);
+    console.log("Snapshot exists:", fs.existsSync(snapshotPath));
+    
     if (!fs.existsSync(snapshotPath)) {
       // First run - create the snapshot
       fs.writeFileSync(snapshotPath, contentSnapshot);
