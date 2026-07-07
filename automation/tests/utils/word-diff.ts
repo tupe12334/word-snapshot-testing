@@ -7,7 +7,7 @@ import AdmZip from "adm-zip";
  * @param filePath - Path to the .docx file
  * @returns The XML content of the document
  */
-function getDocXml(filePath: string): string {
+function getDocumentXml(filePath: string): string {
   const zip = new AdmZip(filePath);
   const entry = zip.getEntry("word/document.xml");
   if (!entry) {
@@ -26,16 +26,16 @@ function parseAndStripDates(xmlStr: string): any {
   const json = parser.parse(xmlStr);
 
   // Convert to string and remove various date formats
-  let jsonStr = JSON.stringify(json)
-    .replace(/\d{4}-\d{2}-\d{2}/g, "") // remove ISO dates (YYYY-MM-DD)
-    .replace(
+  const jsonString = JSON.stringify(json)
+    .replaceAll(/\d{4}-\d{2}-\d{2}/g, "") // remove ISO dates (YYYY-MM-DD)
+    .replaceAll(
       /\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}\b/g,
       ""
     ) // remove "Month DD, YYYY" format
-    .replace(/\b\d{1,2}\/\d{1,2}\/\d{4}\b/g, "") // remove MM/DD/YYYY format
-    .replace(/\b\d{1,2}-\d{1,2}-\d{4}\b/g, ""); // remove MM-DD-YYYY format
+    .replaceAll(/\b\d{1,2}\/\d{1,2}\/\d{4}\b/g, "") // remove MM/DD/YYYY format
+    .replaceAll(/\b\d{1,2}-\d{1,2}-\d{4}\b/g, ""); // remove MM-DD-YYYY format
 
-  return JSON.parse(jsonStr);
+  return JSON.parse(jsonString);
 }
 
 /**
@@ -45,11 +45,11 @@ function parseAndStripDates(xmlStr: string): any {
  */
 function extractWordContentForSnapshot(documentPath: string): string {
   // Extract and parse the Word document XML content
-  const xmlContent = getDocXml(documentPath);
+  const xmlContent = getDocumentXml(documentPath);
   const parsedContent = parseAndStripDates(xmlContent);
 
   // Return formatted JSON string for consistent snapshot comparison
   return JSON.stringify(parsedContent, null, 2);
 }
 
-export { getDocXml, parseAndStripDates, extractWordContentForSnapshot };
+export { getDocumentXml as getDocXml, parseAndStripDates, extractWordContentForSnapshot };

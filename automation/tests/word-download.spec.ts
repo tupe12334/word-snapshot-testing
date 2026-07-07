@@ -1,6 +1,6 @@
+import path from "node:path";
+import fs from "node:fs";
 import { test, expect } from "@playwright/test";
-import path from "path";
-import fs from "fs";
 import { extractWordContentForSnapshot } from "./utils/word-diff";
 
 test.describe("Word Document Download", () => {
