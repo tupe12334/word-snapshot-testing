@@ -7,12 +7,12 @@ This Playwright project automates the download of Word documents from the HTML p
 1. Install dependencies:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Install Playwright browsers:
    ```bash
-   npm run install-browsers
+   pnpm run install-browsers
    ```
 
 ## Running Tests
@@ -20,27 +20,30 @@ This Playwright project automates the download of Word documents from the HTML p
 - Run all tests:
 
   ```bash
-  npm test
+  pnpm test
   ```
 
 - Run tests with browser visible:
 
   ```bash
-  npm run test:headed
+  pnpm run test:headed
   ```
 
 - Debug tests:
   ```bash
-  npm run test:debug
+  pnpm run test:debug
+  ```
+
+- Update snapshots:
+  ```bash
+  pnpm run test:update-snapshots
   ```
 
 ## Test Coverage
 
 The test suite includes:
 
-1. **Basic Download Test**: Verifies that clicking the download button successfully downloads a Word document
-2. **Multiple Downloads Test**: Tests downloading multiple files in sequence
-3. **Page Elements Test**: Verifies all page elements are present and working before attempting download
+1. **Word Document Download**: Downloads the Word document via the page's download button, verifies the file was saved with content, and compares its extracted content against a stored snapshot (`word-document-content.json`)
 
 ## Downloaded Files
 
@@ -52,7 +55,7 @@ The Playwright configuration is set up to:
 
 - Use the local HTML file as the base URL
 - Run tests in parallel
-- Support Chrome, Firefox, and Safari
+- Run against Chrome (via the `chromium` project, using the system Chrome channel)
 - Generate HTML reports
 - Handle file downloads properly
 
@@ -61,9 +64,12 @@ The Playwright configuration is set up to:
 ```
 automation/
 ├── package.json
-├── playwright.config.js
+├── playwright.config.ts
 ├── tests/
-│   └── word-download.spec.js
+│   ├── word-download.spec.ts
+│   ├── word-download.spec.ts-snapshots/
+│   └── utils/
+│       └── word-diff.ts
 ├── downloads/          # Downloaded files will be saved here
 └── README.md
 ```
